@@ -1,0 +1,650 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --grey: rgba(255,255,255,0.4);
+  --font: 'Space Grotesk', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font);
+  overflow-x: hidden;
+}
+
+/* ── MENU BUTTON ── */
+.menu-btn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  font-size: 1rem;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: border-color 0.3s;
+}
+
+.menu-btn:hover {
+  border-color: var(--white);
+}
+
+/* ── SIDE MENU ── */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 320px;
+  height: 100vh;
+  background: rgba(0,0,0,0.95);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+  transition: right 0.5s cubic-bezier(0.77,0,0.175,1);
+  backdrop-filter: blur(10px);
+}
+
+.side-menu.open {
+  right: 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+.side-menu ul {
+  list-style: none;
+}
+
+.side-menu ul li {
+  margin-bottom: 1.5rem;
+}
+
+.side-menu ul li a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.side-menu ul li a:hover {
+  opacity: 1;
+}
+
+/* ── CONTACT ── */
+.contact-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color 0.3s;
+}
+
+.contact-btn:hover {
+  border-color: var(--white);
+}
+
+.contact-panel {
+  position: fixed;
+  bottom: 5rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.contact-panel.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.contact-panel a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  text-align: right;
+  transition: opacity 0.3s;
+}
+
+.contact-panel a:hover {
+  opacity: 1;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-name {
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.hero-typing {
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--grey);
+  height: 1.5em;
+}
+
+.cursor {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: none;
+  color: var(--grey);
+  font-family: var(--font);
+}
+
+@keyframes fadeUpDown {
+  0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+}
+
+/* ── PROJECTS ── */
+.project {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.project-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+
+.project:hover .project-video {
+  opacity: 0.7;
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+}
+
+.project-info {
+  position: relative;
+  z-index: 2;
+  padding: 3rem;
+}
+
+.project-num {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--grey);
+  margin-bottom: 0.5rem;
+}
+
+.project-title {
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.project-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--grey);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+
+.project-link {
+  display: inline-block;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  padding-bottom: 2px;
+  transition: border-color 0.3s;
+}
+
+.project-link:hover {
+  border-color: var(--white);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .side-menu {
+    width: 100%;
+    right: -100%;
+  }
+
+  .project-info {
+    padding: 2rem;
+  }
+}
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font: 'Space Mono', monospace;
+  --white: #ffffff;
+  --black: #000000;
+  --dim: rgba(255,255,255,0.35);
+  --size: 0.72rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: var(--size);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 2rem;
+}
+
+.logo {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+  letter-spacing: -0.04em;
+  transform: scaleY(0.82);
+  display: inline-block;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: var(--size);
+  letter-spacing: 0.05em;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+/* ── WORK DROPDOWN ── */
+.work-menu {
+  position: fixed;
+  top: 3.5rem;
+  right: 2rem;
+  z-index: 99;
+  background: rgba(0,0,0,0.88);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  padding: 1.2rem 1.6rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 220px;
+}
+
+.work-menu.open {
+  display: flex;
+}
+
+.work-menu-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.work-menu a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: var(--size);
+  opacity: 0.45;
+  transition: opacity 0.2s;
+  letter-spacing: 0.03em;
+}
+
+.work-menu a:hover {
+  opacity: 1;
+}
+
+/* ── BG VIDEO ── */
+.bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.hero-center {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.typing-box {
+  display: inline-block;
+  /*background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 0.4rem 0.8rem;*/
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  min-width: 180px;
+  text-align: center;
+}
+
+.cursor {
+  animation: blink 0.8s infinite;
+  font-size: 0.6rem;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 1.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--dim);
+  z-index: 2;
+}
+
+/* ── PROJECTS ── */
+.project {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  transition: background 0.3s;
+}
+
+.project:hover .project-overlay {
+  background: rgba(0,0,0,0.15);
+}
+
+.project-info {
+  position: absolute;
+  top: 5rem;
+  left: 2rem;
+  z-index: 2;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.project-title {
+  font-size: var(--size);
+  letter-spacing: 0.05em;
+  color: var(--white);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+  padding-bottom: 1px;
+}
+
+.project-info:hover .project-title {
+  border-bottom-color: rgba(255,255,255,0.5);
+}
+
+.project-meta {
+  font-size: 0.62rem;
+  color: var(--dim);
+  letter-spacing: 0.05em;
+}
+
+/* ── VIDEO OVERLAY ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.overlay.open {
+  display: flex;
+}
+
+.overlay-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: var(--font);
+  font-size: var(--size);
+  opacity: 0.4;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: opacity 0.2s;
+}
+
+.overlay-close:hover {
+  opacity: 1;
+}
+
+.overlay iframe {
+  width: 90vw;
+  height: 80vh;
+  border: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav {
+    padding: 1.2rem 1.2rem;
+  }
+  .project-info {
+    left: 1.2rem;
+  }
+  .overlay iframe {
+    width: 100vw;
+    height: 55vw;
+  }
+}
+/* ── STATIC PAGES ── */
+.static-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem 2rem;
+}
+
+.static-content p {
+  font-size: var(--size);
+  line-height: 2;
+  letter-spacing: 0.05em;
+  color: var(--dim);
+  max-width: 480px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem 4rem;
+}
+
+.contact-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contact-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--dim);
+  text-transform: lowercase;
+}
+
+.contact-block a,
+.contact-block span {
+  font-size: var(--size);
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+.contact-block a:hover {
+  opacity: 0.6;
+}
