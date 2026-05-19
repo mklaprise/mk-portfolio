@@ -54,11 +54,20 @@ const overlayClose = document.getElementById("overlayClose");
 document.querySelectorAll(".project-info").forEach(info => {
   info.addEventListener("click", () => {
     const videoUrl = info.getAttribute("data-video");
-    overlayIframe.src = videoUrl;
+
+    // reset
+    overlayIframe.src = "";
     overlay.classList.add("open");
     document.body.style.overflow = "hidden";
+
+    // load neu
+    setTimeout(() => {
+      overlayIframe.src = videoUrl;
+      // (Play ist nicht immer direkt programmatisch möglich, aber mit mute/gesture klappt es besser)
+    }, 50);
   });
 });
+
 
 overlayClose.addEventListener("click", closeOverlay);
 
