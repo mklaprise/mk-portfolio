@@ -625,6 +625,18 @@ body {
   text-align: center;
 }
 
+.static-content a,
+.static-content a:visited,
+.static-content a:active,
+.static-content a:focus {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.static-content a:hover {
+  opacity: 0.6;
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
